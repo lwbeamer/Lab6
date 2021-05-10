@@ -12,24 +12,22 @@ public class CommandReader {
     private final Scanner inputScanner;
     private final CommandManager commandManager;
     private final UserDataReceiver userDataReceiver;
-    private final Outputer outputer;
 
     private final List<String> scriptStack = new ArrayList<>();
 
 
 
-    public CommandReader(Scanner inputScanner, CommandManager commandManager, UserDataReceiver userDataReceiver, Outputer outputer) {
+    public CommandReader(Scanner inputScanner, CommandManager commandManager, UserDataReceiver userDataReceiver) {
         this.inputScanner = inputScanner;
         this.commandManager = commandManager;
         this.userDataReceiver = userDataReceiver;
-        this.outputer = outputer;
     }
 
 
     public void readCommand() {
         int commandStatus;
         String[] inputCommand;
-        outputer.println("Клиент запущен!");
+        Outputer.println("Клиент запущен!");
 
         do {
             inputCommand = (inputScanner.nextLine().trim() + " ").split(" ", 2);
@@ -62,7 +60,7 @@ public class CommandReader {
                     inputCommand = (scriptScanner.nextLine().trim() + " ").split(" ", 2);
                     inputCommand[1] = inputCommand[1].trim();
                 }
-                outputer.println(String.join(" ", inputCommand));
+                Outputer.println(String.join(" ", inputCommand));
 
                 if (inputCommand[0].equals("execute_script")) { //если есть команда вызова скрипта, проверяется, не вызывается ли файл, который уже есть в стэке, если да, то происходит рекурсия (ошибка)
                     for (String script : scriptStack) {
@@ -78,30 +76,29 @@ public class CommandReader {
             userDataReceiver.setNormalMode(); //Возвращаем консольный режим
 
             if (commandStatus == 1) { //Если програма отработала с ошибкой
-                outputer.println("Что-то пошло не так. Проверьте на корректность введённых данных скрипт "+argument);
+                Outputer.println("Что-то пошло не так. Проверьте на корректность введённых данных скрипт "+argument);
             }
             return commandStatus;
 
         }  catch (NoSuchElementException e) {
-            outputer.printError("Файл со скриптом пуст!");
+            Outputer.printError("Файл со скриптом пуст!");
         } catch (ScriptRecursionException e) {
-            outputer.printError("Скрипты не могут вызываться рекурсивно!");
+            Outputer.printError("Скрипты не могут вызываться рекурсивно!");
         } catch (FileNotFoundException e) {
-            outputer.printError("Файл со скриптом не найден!");
+            Outputer.printError("Файл со скриптом не найден!");
         }
         return 1;
     }
 
     /**
-     * TODO:
-     * Внести логику exit в его execute()
-     * Избавиться от NullPointerException
      *
-     * @param userCommand
-     * @return
+     * @param userCommand command + argument
+     * @return command code
      */
     private int launchCommand(String[] userCommand) {
-        try {
+
+            if (!getCommandsMap().containsKey(userCommand[0])) Outputer.println("Команда " + userCommand[0] + " не найдена. Наберите 'help' для справки.");
+
             if (userCommand[0].equals("exit")) {
                 if (getCommandsMap().get(userCommand[0]).convert(userCommand[1])) return 2;
             }
@@ -112,9 +109,6 @@ public class CommandReader {
 
             getCommandsMap().get(userCommand[0]).convert(userCommand[1]);
 
-        } catch (NullPointerException e){
-            outputer.println("Команда " + userCommand[0] + " не найдена. Наберите 'help' для справки.");
-        }
         return 0;
     }
 

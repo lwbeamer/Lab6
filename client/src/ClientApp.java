@@ -9,23 +9,22 @@ import java.util.Scanner;
 public class ClientApp {
     public static void main(String[] args) throws IOException{
 
-        Outputer outputer = new Outputer();
 
         SocketAddress address = new InetSocketAddress("localhost",1337);
 
         DatagramChannel channel = DatagramChannel.open();
 
-        Receiver receiver = new Receiver(channel,address,outputer);
+        Receiver receiver = new Receiver(channel);
 
         Sender sender = new Sender(channel,address);
 
         Scanner scanner = new Scanner(System.in);
 
-        UserDataReceiver userDataReceiver = new UserDataReceiver(scanner,outputer);
+        UserDataReceiver userDataReceiver = new UserDataReceiver(scanner);
 
-        CommandManager commandManager = new CommandManager(sender,receiver,userDataReceiver,outputer);
+        CommandManager commandManager = new CommandManager(sender,receiver,userDataReceiver);
 
-        CommandReader commandReader = new CommandReader(scanner,commandManager, userDataReceiver,outputer);
+        CommandReader commandReader = new CommandReader(scanner,commandManager, userDataReceiver);
 
         commandReader.readCommand();
 

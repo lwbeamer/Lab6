@@ -23,7 +23,10 @@ public class Sender {
     }
 
     public void send(Answer answer){
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
+        try  {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+
             objectOutputStream.writeObject(answer);
             objectOutputStream.flush();
 

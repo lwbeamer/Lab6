@@ -52,6 +52,7 @@ public class Receiver {
 
             } catch (IOException | ClassNotFoundException e) {
                 log.severe("Непредвиденная ошибка! Не удалось принять запрос от клиента!");
+                e.printStackTrace();
             }
         }
     }

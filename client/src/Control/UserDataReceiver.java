@@ -18,10 +18,9 @@ public class UserDataReceiver {
 
     private Scanner inputScanner;
     private boolean scriptMode;
-    private final Outputer outputer;
 
-    public UserDataReceiver(Scanner inputScanner, Outputer outputer) {
-        this.outputer = outputer;
+
+    public UserDataReceiver(Scanner inputScanner) {
         this.inputScanner = inputScanner;
         scriptMode = false;
     }
@@ -49,13 +48,13 @@ public class UserDataReceiver {
         String name;
         while (true) {
             try {
-                outputer.println("Введите имя рабочего:");
+                Outputer.println("Введите имя рабочего:");
                 name = inputScanner.nextLine().trim();
-                if (scriptMode) outputer.println(name);
+                if (scriptMode) Outputer.println(name);
                 if (name.equals("")) throw new ValueIsEmptyException();
                 break;
             } catch (ValueIsEmptyException e) {
-                outputer.printError("Имя не может быть пустым!");
+                Outputer.printError("Имя не может быть пустым!");
             }
         }
         return name;
@@ -81,16 +80,16 @@ public class UserDataReceiver {
         long x;
         while (true) {
             try {
-                outputer.println("Введите координату X:");
+                Outputer.println("Введите координату X:");
                 strX = inputScanner.nextLine().trim();
                 if (strX.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strX);
+                if (scriptMode) Outputer.println(strX);
                 x = Long.parseLong(strX);
                 break;
             } catch (NumberFormatException e) {
-                outputer.printError("Координата X должна быть представлена целым числом!");
+                Outputer.printError("Координата X должна быть представлена целым числом!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return x;
@@ -104,16 +103,16 @@ public class UserDataReceiver {
         long y;
         while (true) {
             try {
-                outputer.println("Введите координату Y:");
+                Outputer.println("Введите координату Y:");
                 strY = inputScanner.nextLine().trim();
                 if (strY.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strY);
+                if (scriptMode) Outputer.println(strY);
                 y = Long.parseLong(strY);
                 break;
             } catch (NumberFormatException e) {
-                outputer.printError("Координата Y должна быть представлена целым числом!");
+                Outputer.printError("Координата Y должна быть представлена целым числом!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return y;
@@ -128,19 +127,19 @@ public class UserDataReceiver {
         double salary;
         while (true) {
             try {
-                outputer.println("Введите зарплату:");
+                Outputer.println("Введите зарплату:");
                 strSalary = inputScanner.nextLine().trim();
                 if (strSalary.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strSalary);
+                if (scriptMode) Outputer.println(strSalary);
                 salary = Double.parseDouble(strSalary);
                 if (salary <= 0) throw new ValueOutOfRangeException();
                 break;
             } catch (ValueOutOfRangeException e) {
-                outputer.printError("Зарплата должна быть больше нуля!");
+                Outputer.printError("Зарплата должна быть больше нуля!");
             } catch (NumberFormatException e) {
-                outputer.printError("Зарплата должна быть представлена числом!");
+                Outputer.printError("Зарплата должна быть представлена числом!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return salary;
@@ -155,17 +154,17 @@ public class UserDataReceiver {
         Position position;
         while (true) {
             try {
-                outputer.println("Список должностей - " + Position.getValues());
-                outputer.println("Введите должность:");
+                Outputer.println("Список должностей - " + Position.getValues());
+                Outputer.println("Введите должность:");
                 strPosition = inputScanner.nextLine().trim();
                 if (strPosition.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strPosition);
+                if (scriptMode) Outputer.println(strPosition);
                 position = Position.valueOf(strPosition.toUpperCase());
                 break;
             } catch (IllegalArgumentException e) {
-                outputer.printError("Такой должности нет в списке!");
+                Outputer.printError("Такой должности нет в списке!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return position;
@@ -180,17 +179,17 @@ public class UserDataReceiver {
         Status status;
         while (true) {
             try {
-                outputer.println("Список статусов - " + Status.getValues());
-                outputer.println("Введите статус:");
+                Outputer.println("Список статусов - " + Status.getValues());
+                Outputer.println("Введите статус:");
                 strStatus = inputScanner.nextLine().trim();
                 if (strStatus.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strStatus);
+                if (scriptMode) Outputer.println(strStatus);
                 status = Status.valueOf(strStatus.toUpperCase());
                 break;
             } catch (IllegalArgumentException e) {
-                outputer.printError("Такого статуса нет в списке!");
+                Outputer.printError("Такого статуса нет в списке!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return status;
@@ -231,19 +230,19 @@ public class UserDataReceiver {
         String [] ArrDate;
         while (true){
             try{
-                outputer.println("Введите дату рождения в формате YYYY-MM-DD:");
+                Outputer.println("Введите дату рождения в формате YYYY-MM-DD:");
                 strDate = inputScanner.nextLine().trim();
                 if (strDate.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strDate);
+                if (scriptMode) Outputer.println(strDate);
                 ArrDate = strDate.split("-");
                 localDate = LocalDate.of(Integer.parseInt(ArrDate[0]), Integer.parseInt(ArrDate[1]), Integer.parseInt(ArrDate[2]));
                 break;
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception){
-                outputer.printError("Дата должна быть представлена числом в нужном формате");
+                Outputer.printError("Дата должна быть представлена числом в нужном формате");
             } catch (DateTimeException e){
-                outputer.printError("Похоже, что такой даты не существует в природе, попробуйте ещё раз!");
+                Outputer.printError("Похоже, что такой даты не существует в природе, попробуйте ещё раз!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return localDate;
@@ -258,19 +257,19 @@ public class UserDataReceiver {
         String [] ArrTime;
         while (true){
             try{
-                outputer.println("Введите время рождения в формате HH-MM:");
+                Outputer.println("Введите время рождения в формате HH-MM:");
                 strTime  = inputScanner.nextLine().trim();
                 if (strTime.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strTime);
+                if (scriptMode) Outputer.println(strTime);
                 ArrTime = strTime.split("-");
                 localTime = LocalTime.of(Integer.parseInt(ArrTime[0]), Integer.parseInt(ArrTime[1]));
                 break;
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException exception){
-                outputer.printError("Время должно быть представлено числом в нужном формате");
+                Outputer.printError("Время должно быть представлено числом в нужном формате");
             } catch (DateTimeException e){
-                outputer.printError("Похоже, что такого времени не существует в природе, попробуйте ещё раз!");
+                Outputer.printError("Похоже, что такого времени не существует в природе, попробуйте ещё раз!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return localTime;
@@ -284,17 +283,17 @@ public class UserDataReceiver {
         float weight;
         while (true) {
             try {
-                outputer.println("Введите вес:");
+                Outputer.println("Введите вес:");
                 strWeight = inputScanner.nextLine().trim();
-                if (scriptMode) outputer.println(strWeight);
+                if (scriptMode) Outputer.println(strWeight);
                 if (strWeight.equals("")) return null;
                 weight = Float.parseFloat(strWeight);
                 if (weight <= 0) throw new ValueOutOfRangeException();
                 break;
             } catch (ValueOutOfRangeException e) {
-                outputer.printError("Вес должен быть больше нуля!");
+                Outputer.printError("Вес должен быть больше нуля!");
             } catch (NumberFormatException e) {
-                outputer.printError("Вес должен быть представлен числом!");
+                Outputer.printError("Вес должен быть представлен числом!");
             }
         }
         return weight;
@@ -307,13 +306,13 @@ public class UserDataReceiver {
         String passportID;
         while (true) {
             try {
-                outputer.println("Введите номер паспорта:");
+                Outputer.println("Введите номер паспорта:");
                 passportID = inputScanner.nextLine().trim();
-                if (scriptMode) outputer.println(passportID);
+                if (scriptMode) Outputer.println(passportID);
                 if (passportID.equals("")) throw new ValueIsEmptyException();
                 break;
             } catch (ValueIsEmptyException e) {
-                outputer.printError("Номер паспорта не может быть пустым!");
+                Outputer.printError("Номер паспорта не может быть пустым!");
             }
         }
         return passportID;
@@ -344,16 +343,16 @@ public class UserDataReceiver {
         double x;
         while (true) {
             try {
-                outputer.println("Введите координату X:");
+                Outputer.println("Введите координату X:");
                 strX = inputScanner.nextLine().trim();
                 if (strX.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strX);
+                if (scriptMode) Outputer.println(strX);
                 x = Double.parseDouble(strX);
                 break;
             } catch (NumberFormatException e) {
-                outputer.printError("Координата X должна быть представлена числом!");
+                Outputer.printError("Координата X должна быть представлена числом!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return x;
@@ -367,16 +366,16 @@ public class UserDataReceiver {
         float y;
         while (true) {
             try {
-                outputer.println("Введите координату Y:");
+                Outputer.println("Введите координату Y:");
                 strY = inputScanner.nextLine().trim();
                 if (strY.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strY);
+                if (scriptMode) Outputer.println(strY);
                 y = Float.parseFloat(strY);
                 break;
             } catch (NumberFormatException e) {
-                outputer.printError("Координата Y должна быть представлена числом!");
+                Outputer.printError("Координата Y должна быть представлена числом!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return y;
@@ -390,16 +389,16 @@ public class UserDataReceiver {
         double z;
         while (true) {
             try {
-                outputer.println("Введите координату Z:");
+                Outputer.println("Введите координату Z:");
                 strZ = inputScanner.nextLine().trim();
                 if (strZ.equals("")) throw new ValueIsEmptyException();
-                if (scriptMode) outputer.println(strZ);
+                if (scriptMode) Outputer.println(strZ);
                 z = Double.parseDouble(strZ);
                 break;
             } catch (NumberFormatException e) {
-                outputer.printError("Координата Z должна быть представлена числом!");
+                Outputer.printError("Координата Z должна быть представлена числом!");
             } catch (ValueIsEmptyException e){
-                outputer.printError("Поле не может быть пустым");
+                Outputer.printError("Поле не может быть пустым");
             }
         }
         return z;
@@ -410,9 +409,9 @@ public class UserDataReceiver {
      */
     public String askLocationName(){
         String LocationName;
-        outputer.println("Введите название локации:");
+        Outputer.println("Введите название локации:");
         LocationName = inputScanner.nextLine().trim();
-        if (scriptMode) outputer.println(LocationName);
+        if (scriptMode) Outputer.println(LocationName);
         if (LocationName.equals("")) return null;
         return LocationName;
     }
@@ -427,14 +426,14 @@ public class UserDataReceiver {
         String answer;
         while (true) {
             try {
-                outputer.println(finalQuestion);
+                Outputer.println(finalQuestion);
                 answer = inputScanner.nextLine().trim();
-                if (scriptMode) outputer.println(answer);
+                if (scriptMode) Outputer.println(answer);
                 if (!answer.equals("+") && !answer.equals("-")) throw new ValueOutOfRangeException();
                 break;
             }
             catch (ValueOutOfRangeException e) {
-                outputer.printError("Напишите в ответ только '+' или '-'!");
+                Outputer.printError("Напишите в ответ только '+' или '-'!");
             }
         }
         return answer.equals("+");

@@ -2,58 +2,60 @@ package Control;
 
 import Answer.Answer;
 
+import Exceptions.ServerIsNotAvailableException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.net.SocketAddress;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.util.concurrent.TimeUnit;
 
-public class Receiver {
+public class Receiver{
 
     private final DatagramChannel channel;
-    private final SocketAddress serverAddress;
     private final ByteBuffer buffer;
-    private final Outputer outputer;
     private Answer answer;
 
-    public Receiver(DatagramChannel channel, SocketAddress serverAddress, Outputer outputer) {
-        this.outputer = outputer;
+    public Receiver(DatagramChannel channel) {
         this.channel = channel;
-        this.serverAddress = serverAddress;
         this.buffer = ByteBuffer.allocate(16384);
     }
 
-    public void run() {
+    public void receive()  {
 
     try {
 
+        channel.configureBlocking(false);
 
         ((Buffer)buffer).clear();
 
-        channel.connect(serverAddress);
+        TimeUnit.MILLISECONDS.sleep(500);
 
-
-        channel.receive(buffer);
+        if (channel.receive(buffer)==null) throw new ServerIsNotAvailableException();
 
         ((Buffer)buffer).flip();
 
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(buffer.array());
+
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+
         answer = (Answer) objectInputStream.readObject();
 
-
-        answer.printAnswer();
+        answer.printStringAnswer();
 
         objectInputStream.close();
         byteArrayInputStream.close();
-        ((Buffer)buffer).clear();
-        channel.disconnect();
-    } catch (IOException | ClassNotFoundException e){
-        outputer.printError("Не удалось получить ответ от сервера");
-    }
 
+        ((Buffer)buffer).clear();
+
+        } catch (InterruptedException e) {
+            Outputer.printError("Ошибка прерывания!");
+        } catch (ServerIsNotAvailableException e) {
+            Outputer.printError("Сервер недоступен!");
+        } catch (IOException | ClassNotFoundException e) {
+            Outputer.printError("Сериализуемый класс не найден!");
+        }
     }
 
     public Answer getAnswer() {

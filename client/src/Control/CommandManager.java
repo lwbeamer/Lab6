@@ -15,17 +15,15 @@ public class CommandManager {
     private final Sender sender;
     private final Receiver receiver;
     private final UserDataReceiver userDataReceiver;
-    private final Outputer outputer;
 
-    public CommandManager(Sender sender, Receiver receiver, UserDataReceiver userDataReceiver, Outputer outputer) {
+
+    public CommandManager(Sender sender, Receiver receiver, UserDataReceiver userDataReceiver) {
 
         this.sender = sender;
 
         this.receiver = receiver;
 
         this.userDataReceiver = userDataReceiver;
-
-        this.outputer = outputer;
 
         commandsMap.put("help",this::help);
 
@@ -80,13 +78,13 @@ public class CommandManager {
 
             Request request = new Request("help");
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -103,13 +101,13 @@ public class CommandManager {
 
             Request request = new Request("add", new Worker(0, userDataReceiver.askName(), userDataReceiver.askCoordinates(), ZonedDateTime.now(), userDataReceiver.askSalary(), userDataReceiver.askPosition(), userDataReceiver.askStatus(), userDataReceiver.askPerson()));
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -125,13 +123,13 @@ public class CommandManager {
 
             Request request = new Request("add_if_max", new Worker(0, userDataReceiver.askName(), userDataReceiver.askCoordinates(), ZonedDateTime.now(), userDataReceiver.askSalary(), userDataReceiver.askPosition(), userDataReceiver.askStatus(), userDataReceiver.askPerson()));
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -147,13 +145,13 @@ public class CommandManager {
 
             Request request = new Request("add_if_min", new Worker(0, userDataReceiver.askName(), userDataReceiver.askCoordinates(), ZonedDateTime.now(), userDataReceiver.askSalary(), userDataReceiver.askPosition(), userDataReceiver.askStatus(), userDataReceiver.askPerson()));
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -169,13 +167,13 @@ public class CommandManager {
 
             Request request = new Request("clear");
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -190,10 +188,10 @@ public class CommandManager {
         try {
             argument = argument.trim();
             if (argument.isEmpty()) throw new WrongArgumentException();
-            outputer.println("Выполняю скрипт '" + argument + "'...");
+            Outputer.println("Выполняю скрипт '" + argument + "'...");
             return true;
         } catch (WrongArgumentException e) {
-            outputer.printError("Укажите файл со скриптом в качестве аргумента.");
+            Outputer.printError("Укажите файл со скриптом в качестве аргумента.");
         }
         return false;
     }
@@ -213,13 +211,13 @@ public class CommandManager {
 
             Request request = new Request("info");
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -238,13 +236,13 @@ public class CommandManager {
 
             Request request = new Request("print_field_descending_status");
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -260,13 +258,13 @@ public class CommandManager {
 
             Request request = new Request("remove_all_by_person", userDataReceiver.askPerson());
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -283,13 +281,13 @@ public class CommandManager {
 
             Request request = new Request("remove_by_id", argument);
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Введите ID!");
+            Outputer.printError("Введите ID!");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -305,13 +303,13 @@ public class CommandManager {
 
             Request request = new Request("remove_head");
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -336,13 +334,13 @@ public class CommandManager {
 
             Request request = new Request("show");
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
+            Outputer.printError("Для этой комманды не нужен аргумент, попробуйте ещё раз");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }
@@ -360,7 +358,7 @@ public class CommandManager {
 
             Request request = new Request("update", argument);
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             if (receiver.getAnswer().getAnswerStatus().equals(AnswerStatus.ERROR)) return false;
 
@@ -386,15 +384,15 @@ public class CommandManager {
 
             request = new Request("add",new Worker(id,name,coordinates,creationDate,salary,position,status,person));
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Укажите ID в качестве аргумента!");
+            Outputer.printError("Укажите ID в качестве аргумента!");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         } catch (NumberFormatException e) {
-            outputer.printError("ID должен быть представлен числом!");
+            Outputer.printError("ID должен быть представлен числом!");
         }
         return false;
     }
@@ -413,13 +411,13 @@ public class CommandManager {
 
             Request request = new Request("filter_by_status",argument);
             sender.sendCommand(request);
-            receiver.run();
+            receiver.receive();
 
             return true;
         } catch (WrongArgumentException e){
-            outputer.printError("Введите статус!");
+            Outputer.printError("Введите статус!");
         } catch (IOException e){
-            outputer.printError("Непредвиденная ошибка");
+            Outputer.printError("Непредвиденная ошибка");
         }
         return false;
     }

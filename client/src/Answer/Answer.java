@@ -1,17 +1,20 @@
 package Answer;
 
+import Control.Outputer;
+
 import java.io.Serializable;
 
 public class Answer implements Serializable {
 
     private String stringAnswer;
-    private AnswerStatus answerStatus;
+    private final AnswerStatus answerStatus;
     private Object objectAnswer;
 
 
     public Answer(String stringAnswer, AnswerStatus answerStatus) {
         this.stringAnswer = stringAnswer;
         this.answerStatus = answerStatus;
+
     }
 
     public Answer(Object objectAnswer, AnswerStatus answerStatus) {
@@ -19,12 +22,8 @@ public class Answer implements Serializable {
         this.objectAnswer = objectAnswer;
     }
 
-    public void printAnswer(){
-        System.out.println(stringAnswer);
-    }
-
-    public String getStringAnswer() {
-        return stringAnswer;
+    public void printStringAnswer(){
+        if (stringAnswer!=null) Outputer.println(stringAnswer);
     }
 
     public AnswerStatus getAnswerStatus() {
@@ -34,4 +33,5 @@ public class Answer implements Serializable {
     public Object getObjectAnswer() {
         return objectAnswer;
     }
+
 }
