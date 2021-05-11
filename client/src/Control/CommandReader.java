@@ -97,7 +97,10 @@ public class CommandReader {
      */
     private int launchCommand(String[] userCommand) {
 
-            if (!getCommandsMap().containsKey(userCommand[0])) Outputer.println("Команда " + userCommand[0] + " не найдена. Наберите 'help' для справки.");
+            if (!getCommandsMap().containsKey(userCommand[0])){
+                Outputer.println("Команда " + userCommand[0] + " не найдена. Наберите 'help' для справки.");
+                return 1;
+            }
 
             if (userCommand[0].equals("exit")) {
                 if (getCommandsMap().get(userCommand[0]).convert(userCommand[1])) return 2;
